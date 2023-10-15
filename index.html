@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Pic - 题图生成器</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="./img/apple-touch-icon-152x152.png" />
+    <script src="./lib/dropzone.min.js"></script>
+    <script src="./lib/html2canvas.min.js"></script>
+    <script src="./lib/d3@7.min.js"></script>
+    <link href="./lib/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- 引入 Google 字体 -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;900&display=swap"> -->
+    <!-- 引入得意黑 -->
+    <!-- <link rel="preload" href="./font/SmileySans-Oblique.otf.woff2" as="font" type="font/woff2"> -->
+    <link rel="preload" href="https://cdn.utgd.net/fonts/SmileySans-Oblique.otf.woff2" as="font" type="font/woff2"
+        crossorigin>
+    <style>
+        @font-face {
+            font-family: '得意黑';
+            src: url('https://cdn.utgd.net/fonts/SmileySans-Oblique.otf.woff2') format('woff2');
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white ">
+    <div class="h-screen">
+        <div class="flex flex-col lg:flex-row h-full">
+            <!-- 左侧配置框 -->
+            <div class="w-full lg:w-80 p-6 border-b lg:border-r border-gray-700 rounded-t lg:rounded-l shadow-lg">
+                <div class="flex flex-col items-center mb-6 space-y-4">
+                    <img src="./img/logo.png" class="w-24 h-24 mb-2 rounded-lg" />
+                    <h1 class="text-2xl mt-2 font-semibold">题图生成器</h1>
+                </div>
+                <div class="items-center space-y-4">
+                    <!-- 背景上传 -->
+                    <div class="mb-4">
+                        <label for="backgroundInput" class="block mb-2 font-medium">背景</label>
+                        <div class="flex items-center space-x-2">
+                            <!-- dropzone  -->
+                            <label
+                                class="bg-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-600 flex items-center justify-center h-10">
+                                选择背景
+                                <input type="file" id="backgroundInput" class="hidden">
+                            </label>
+                            <button id="removeBackgroundBtn"
+                                onclick="removeImage('backgroundImage', 'backgroundInput', 'removeBackgroundBtn')"
+                                class="bg-red-600 px-3 py-1 rounded text-white hover:bg-red-500 hidden h-10">删除</button>
+                        </div>
+                    </div>
+                    <!-- 图标上传 -->
+                    <div class="mb-4">
+                        <label for="iconInput1" class="block mb-2 font-medium">图标 1</label>
+                        <div class="flex items-center space-x-2">
+                            <label
+                                class="bg-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-600 flex items-center justify-center h-10">
+                                选择图标
+                                <input type="file" id="iconInput1" class="hidden">
+                            </label>
+                            <button id="removeIconBtn1"
+                                onclick="removeImage('iconImage1', 'iconInput1','removeIconBtn1')"
+                                class="bg-red-600 px-3 py-1 rounded text-white hover:bg-red-500 hidden h-10">删除</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="iconInput2" class="block mb-2 font-medium">图标 2</label>
+                        <div class="flex items-center space-x-2">
+                            <label
+                                class="bg-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-600 flex items-center justify-center h-10">
+                                选择图标
+                                <input type="file" id="iconInput2" class="hidden">
+                            </label>
+                            <button id="removeIconBtn2"
+                                onclick="removeImage('iconImage2', 'iconInput2','removeIconBtn2')"
+                                class="bg-red-600 px-3 py-1 rounded text-white hover:bg-red-500 hidden h-10">删除</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="iconInput3" class="block mb-2 font-medium">图标 3</label>
+                        <div class="flex items-center space-x-2">
+                            <label
+                                class="bg-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-600 flex items-center justify-center h-10">
+                                选择图标
+                                <input type="file" id="iconInput3" class="hidden">
+                            </label>
+                            <button id="removeIconBtn3"
+                                onclick="removeImage('iconImage3', 'iconInput3','removeIconBtn3')"
+                                class="bg-red-600 px-3 py-1 rounded text-white hover:bg-red-500 hidden h-10">删除</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="iconInput4" class="block mb-2 font-medium">图标 4</label>
+                        <div class="flex items-center space-x-2">
+                            <label
+                                class="bg-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-600 flex items-center justify-center h-10">
+                                选择图标
+                                <input type="file" id="iconInput4" class="hidden">
+                            </label>
+                            <button id="removeIconBtn4"
+                                onclick="removeImage('iconImage4', 'iconInput4','removeIconBtn4')"
+                                class="bg-red-600 px-3 py-1 rounded text-white hover:bg-red-500 hidden h-10">删除</button>
+                        </div>
+                    </div>
+
+                    <!-- 文字 -->
+                    <div class="mb-4">
+                        <label class="block mb-2 font-medium">文字</label>
+                        <textarea id="textInput" maxlength="100"
+                            class="w-full p-2 bg-gray-800 border border-gray-700 rounded"></textarea>
+                    </div>
+                    <div>
+                        <button onclick="generateImage()"
+                            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white">生成图片</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 中间显示部分 -->
+            <div class="flex flex-1 p-6 justify-center items-center" id="mainSection">
+                <!-- d3.js 编辑区域 -->
+                <div id="mainSVG">
+                    <!-- <svg width="1024" height="640"> -->
+                    <svg width="100%" height="100%" viewBox="0 0 1024 640" preserveAspectRatio="xMidYMid meet"
+                        style="max-width: 1024px; max-height: 640px; margin: auto;">
+
+                    </svg>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 遮罩层 -->
+        <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+            <p id="overlay-text" class="text-white text-2xl">正在生成图片...</p>
+        </div>
+
+        <!-- 版权信息 -->
+        <div id="copyright"
+            class="bg-opacity-50 p-4 flex justify-center items-center fixed bottom-0 inset-x-0 lg:bottom-4 lg:right-4 lg:inset-auto lg:absolute text-gray-500 text-sm z-50">
+            <a href="https://github.com/UntagTeam/Untag-Banner-Pic" target="_blank" class="hover:underline">
+                <img src="https://img.shields.io/badge/GitHub-UntagBannerPic-blue?logo=GitHub&logoColor=white"
+                    alt="GitHub">
+            </a>
+            <span class="mx-2">by</span>
+            <a href="https://github.com/yarin-zhang" class="hover:underline text-blue-400">YarinZ</a>
+            <span class="mx-2">|</span>
+            <a href="https://utgd.net" class="hover:underline text-blue-400">#UNTAG</a>
+        </div>
+    </div>
+
+    <!-- js -->
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
